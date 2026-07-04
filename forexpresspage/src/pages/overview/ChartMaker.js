@@ -2,8 +2,7 @@ import NewChart from './NewChart.js';
 import fetchData from './Overview.js';
 import React from 'react';
 import {useState, useEffect, useRef} from 'react';
-import { INFINITY } from 'chart.js/helpers';
-
+const INFINITY = Number.POSITIVE_INFINITY;
 export default function ChartMaker({time, cur1, cur2}){
     const [pot, setPot] = useState();
     const [label, setLabel] = useState([1, 2, 3, 4, 5]);

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import { Chart } from 'chart.js/auto';
-
+// import { Chart } from 'chart.js/auto';
+import Chart from 'chart.js/dist/Chart.js'; 
+window.Chart = Chart;
 const NewChart = ({data, options, width, height}) => {
     const chartRef = useRef(null);
     const chartInstanceRef = useRef(null);
