@@ -40,7 +40,7 @@ async function main(){
     con = await mysql.createConnection({
       host: "127.0.0.1",
       user: "root",
-      password: "Rayaan21",
+      password: "Calculator21!",
       database: "currencies"
     });
 

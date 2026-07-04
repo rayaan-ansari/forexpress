@@ -47,16 +47,15 @@ async function main(){
   con = await mysql.createConnection({
     host: "127.0.0.1",
     user: "root",
-    password: "Rayaan21",
+    password: "Calculator21!",
     database: "currencies"
-  });
-  
+  });  
   //var arr = await getNowData("tes", "ter");
   //console.log(arr);
 }                            
 
 async function insertPrice(year, month, day, hour, minute, price, cur1, cur2){
-    //console.log('insert into ' + cur1 + cur2 + ' (year,month,day,hour,minute,price) values (\'' + year + '\',' + '\'' + month + '\',' + '\'' + day + '\',' + '\'' + hour + '\',' + '\'' + minute + '\',' + '\'' + price + '\')');
+    console.log('insert into ' + cur1 + cur2 + ' (year,month,day,hour,minute,price) values (\'' + year + '\',' + '\'' + month + '\',' + '\'' + day + '\',' + '\'' + hour + '\',' + '\'' + minute + '\',' + '\'' + price + '\')');
     await con.execute('insert into ' + cur1 + cur2 + ' (year,month,day,hour,minute,price) values (\'' + year + '\',' + '\'' + month + '\',' + '\'' + day + '\',' + '\'' + hour + '\',' + '\'' + minute + '\',' + '\'' + price + '\')');
 }
 
