@@ -12,7 +12,7 @@ export default function ChartMaker({time, cur1, cur2}){
     const [high, setHigh] = useState(0);
 
     const fetchHistory = async () => {
-        const url = `http://localhost:3002/api/getData/${time}/${cur1}/${cur2}`;
+        const url = `http://localhost:3001/api/getData/${time}/${cur1}/${cur2}`;
         //console.log(url);
         const response = await fetch(url);
         if (!response.ok) {

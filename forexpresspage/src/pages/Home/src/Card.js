@@ -15,11 +15,11 @@ export default function Card({cur1, cur2}) {
     var amt = document.getElementById('newAmount').value;
     console.log(cur1 + " / " + cur2 + " / " + amt);
 
-    var url = 'http://localhost:3001/api/updateBalance/rayaan/' + cur1 + '/' + amt + '/buy';
-    console.log(url);
-    var response = await fetch(url);
+    // var url = 'http://localhost:3001/api/updateBalance/rayaan/' + cur1 + '/' + amt + '/buy';
+    // console.log(url);
+    // var response = await fetch(url);
 
-    url = `http://localhost:3002/api/getData/Top/${cur1}/${cur2}`;
+    url = `https://limpness-blemish-oblong.ngrok-free.dev/api/getData/Top/${cur1}/${cur2}`;
     console.log(url);
     response = await fetch(url);
     if (!response.ok) {
@@ -37,7 +37,7 @@ export default function Card({cur1, cur2}) {
 
     console.log(hist.price + " " + amt);
 
-    url = 'http://localhost:3001/api/updateBalance/rayaan/' + cur2 + '/' + amt + '/sell';
+    url = 'https://limpness-blemish-oblong.ngrok-free.dev/api/updateBalance/rayaan/' + cur2 + '/' + amt + '/sell';
     console.log(url);
     response = await fetch(url);
 
