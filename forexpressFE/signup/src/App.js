@@ -17,9 +17,6 @@ async function sendData(url, user, pass){
         password : pass
       })
     });
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
     const data = await response.json();
     console.log('Data received:', data);
 
@@ -60,6 +57,7 @@ function App() {
             <button type="submit" className="login-button">Sign up</button>
 
           </form>
+          <div id="result"></div>
         </div>
       </div>
       <img src={stockImg} className="stock-img" alt="could not find image" />

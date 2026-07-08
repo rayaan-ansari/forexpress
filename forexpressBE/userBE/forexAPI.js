@@ -1,4 +1,4 @@
-import { login, getHistory, getBalance, validateUser, signUp, updateBalance, updateHistory } from './forexDB.js';
+import { getHistory, getBalance, validateUser, signUp, updateBalance, updateHistory } from './forexDB.js';
 import express from 'express';
 const router = express.Router();
 
@@ -17,6 +17,26 @@ router.get('/api/getUser/:username', async (req, res) => {
         balance : balance,
         history : history
     });
+});
+
+router.get('/api/login/:username/:password', async (req, res) => {
+    var username = req.params.username;
+    var password = req.params.password;
+
+    var result = await validateUser(username, password);
+
+    if(result == 2){
+        var balance = await getBalance(username);
+        var history = await getHistory(username);
+        res.status(244).send({
+            success : true,
+            balance : balance,
+            history : history
+        });
+    }
+    else{
+        res.status(300).send({ success : false, message : "Incorrect username or password" });
+    }
 });
 
 router.post('/api/signUser', async (req, res) => {

@@ -5,9 +5,6 @@ async function fetchData(url) {
   try {
     // Send the GET request using fetch
     const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
     const data = await response.json();
     console.log('Data received:', data);
 
@@ -28,7 +25,7 @@ const handleLogin = (e) => {
 
   console.log(username);
   console.log(password);
-  const url = 'http://localhost:3001/api/getUser/' + username + '/' + password;
+  const url = 'http://localhost:3001/api/login/' + username + '/' + password;
 
   console.log(url);
   
@@ -53,6 +50,7 @@ function App() {
             <button type="submit" className="login-button">Log in</button>
 
           </form>
+          <div id="result"></div>
         </div>
       </div>
       <img src={stockImg} className="stock-img" alt="could not find image" />
