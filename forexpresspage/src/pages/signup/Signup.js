@@ -45,7 +45,7 @@ function App() {
     var username = document.getElementById('uname').value;
     var password = document.getElementById('pword').value;
   
-    const url = "http://localhost:3001/api/signUser";
+    const url = "https://limpness-blemish-oblong.ngrok-free.dev/api/signUser";
   
     sendData(url, username, password);
   }

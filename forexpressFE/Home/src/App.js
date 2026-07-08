@@ -46,7 +46,7 @@ export default function App() {
   }
   const handleStockClick = e => {
     e.preventDefault();
-    const newData = getStock('http://localhost:3002/api/getData/Top/' + cur1 + '/' + cur2);
+    const newData = getStock('http://localhost:3001/api/getData/Top/' + cur1 + '/' + cur2);
     console.log(newData);
   }
 
