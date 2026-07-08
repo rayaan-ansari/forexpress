@@ -5,7 +5,7 @@ const app = express();
 
 app.use(express.json()); 
 
-const port = 3001;
+const port = 80;
 app.use(cors());
 
 app.get('/api/getUser/:username', async (req, res) => {

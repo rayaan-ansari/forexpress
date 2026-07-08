@@ -5,7 +5,7 @@ const app = express();
 
 app.use(express.json()); 
 
-const port = 3002;
+const port = 80;
 app.use(cors());
 
 const functionsMap = {
