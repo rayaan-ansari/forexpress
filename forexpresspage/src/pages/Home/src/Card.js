@@ -15,13 +15,9 @@ export default function Card({cur1, cur2}) {
     var amt = document.getElementById('newAmount').value;
     console.log(cur1 + " / " + cur2 + " / " + amt);
 
-    // var url = 'http://localhost:3001/api/updateBalance/rayaan/' + cur1 + '/' + amt + '/buy';
-    // console.log(url);
-    // var response = await fetch(url);
-
-    url = `https://limpness-blemish-oblong.ngrok-free.dev/api/getData/Top/${cur1}/${cur2}`;
+    var url = `https://limpness-blemish-oblong.ngrok-free.dev/api/getData/Top/${cur1}/${cur2}`;
     console.log(url);
-    response = await fetch(url);
+    var response = await fetch(url);
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
