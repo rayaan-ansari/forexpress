@@ -17,20 +17,20 @@ function generateRandomChange(){
 
 main();
 
-async function resetIncrement(cur1, cur2){
+export async function resetIncrement(cur1, cur2){
     var x = cur1 + cur2;
     con.execute('ALTER TABLE ' + x + ' DROP entryNumber');
     con.execute('ALTER TABLE ' + x + ' AUTO_INCREMENT = 1');
     con.execute('ALTER TABLE ' + x + ' ADD entryNumber int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST');
 }
 
-async function createTables(){
+export async function createTables(){
     for(var i = 0; i < 10; i++){
         con.execute('create table ' + currencyComparisons.at(i).at(0) + currencyComparisons.at(i).at(1) + ' (entryNumber int NOT NULL AUTO_INCREMENT,year varchar(4),month varchar(2),day varchar(2),hour varchar(2),minute varchar(2),price varchar(15), PRIMARY KEY (entryNumber))')
     }
 }
 
-async function testQuery(){
+export async function testQuery(){
     
     //resetIncrement("tester", "");
 
@@ -43,7 +43,7 @@ async function testQuery(){
     // getIndexFromTop("USD", "DKK", 2);
 }
 
-async function main(){
+export async function main(){
   con = await mysql.createConnection({
     host: "127.0.0.1",
     user: "root",
@@ -54,7 +54,7 @@ async function main(){
   //console.log(arr);
 }                            
 
-async function insertPrice(year, month, day, hour, minute, price, cur1, cur2){
+export async function insertPrice(year, month, day, hour, minute, price, cur1, cur2){
     console.log('insert into ' + cur1 + cur2 + ' (year,month,day,hour,minute,price) values (\'' + year + '\',' + '\'' + month + '\',' + '\'' + day + '\',' + '\'' + hour + '\',' + '\'' + minute + '\',' + '\'' + price + '\')');
     await con.execute('insert into ' + cur1 + cur2 + ' (year,month,day,hour,minute,price) values (\'' + year + '\',' + '\'' + month + '\',' + '\'' + day + '\',' + '\'' + hour + '\',' + '\'' + minute + '\',' + '\'' + price + '\')');
 }
@@ -63,13 +63,13 @@ async function getHistory(cur1, cur2, index){
 
 }
 
-async function getSize(cur1, cur2){
+export async function getSize(cur1, cur2){
     const data = await con.execute('SELECT COUNT(*) FROM ' + cur1 + cur2);
     var size = data[0][0]['COUNT(*)'];
     return size;
 }
 
-async function getIndexFromTop(cur1, cur2, indexFromTop){
+export async function getIndexFromTop(cur1, cur2, indexFromTop){
     var size = await getSize(cur1, cur2);
     var index = size - indexFromTop + 1;
     //console.log(size + " " + indexFromTop + " " + index);
@@ -84,7 +84,7 @@ async function getIndexFromTop(cur1, cur2, indexFromTop){
     }
 }
 
-async function getData(cur1, cur2, numEntries, dif){
+export async function getData(cur1, cur2, numEntries, dif){
     var data = [];
     var size = await getSize(cur1, cur2);
     for(var i = 0; i < numEntries && i * dif + 1 <= size; i++){
@@ -95,26 +95,25 @@ async function getData(cur1, cur2, numEntries, dif){
     return data;
 }
 
-async function getTop(cur1, cur2){
+export async function getTop(cur1, cur2){
     return await getData(cur1, cur2, 1, 1);
 }
-async function getNowData(cur1, cur2){
+export async function getNowData(cur1, cur2){
     return await getData(cur1, cur2, 180, 2);
 }
-async function getDayData(cur1, cur2){
+export async function getDayData(cur1, cur2){
     return await getData(cur1, cur2, 24, 60);
 }
-async function getWeekData(cur1, cur2){
+export async function getWeekData(cur1, cur2){
     return await getData(cur1, cur2, 21, 480);
 }
-async function getMonthData(cur1, cur2){
+export async function getMonthData(cur1, cur2){
     return await getData(cur1, cur2, 30, 1440);
 }
-async function getYearData(cur1, cur2){
+export async function getYearData(cur1, cur2){
     return await getData(cur1, cur2, 24, 21600);
 }
-async function getFiveYearsData(cur1, cur2){
+export async function getFiveYearsData(cur1, cur2){
     return await getData(cur1, cur2, 60, 43200);
 }
 
-export { insertPrice, getTop, getNowData, getDayData, getWeekData, getMonthData, getYearData, getFiveYearsData, currencyComparisons };

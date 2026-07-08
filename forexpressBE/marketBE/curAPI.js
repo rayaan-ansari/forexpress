@@ -1,12 +1,6 @@
 import { getTop, getNowData, getDayData, getWeekData, getMonthData, getYearData, getFiveYearsData } from './curDB.js';
 import express from 'express';
-import cors from 'cors';
-const app = express();
-
-app.use(express.json()); 
-
-const port = 3001;
-app.use(cors());
+const router = express.Router();
 
 const functionsMap = {
     getTop : getTop,
@@ -18,7 +12,7 @@ const functionsMap = {
     getFiveYearsData: getFiveYearsData
 };
 
-app.get('/api/getData/:func/:cur1/:cur2', async (req, res) => {
+router.get('/api/getData/:func/:cur1/:cur2', async (req, res) => {
     //console.log("Data get works");
     var cur1 = req.params.cur1;
     var cur2 = req.params.cur2;
@@ -39,4 +33,4 @@ app.get('/api/getData/:func/:cur1/:cur2', async (req, res) => {
     });
 });
 
-app.listen(port, () => console.log("listening to port : " + port));
+export default router;

@@ -1,14 +1,8 @@
 import { login, getHistory, getBalance, validateUser, signUp, updateBalance, updateHistory } from './forexDB.js';
 import express from 'express';
-import cors from 'cors';
-const app = express();
+const router = express.Router();
 
-app.use(express.json()); 
-
-const port = 80;
-app.use(cors());
-
-app.get('/api/getUser/:username', async (req, res) => {
+router.get('/api/getUser/:username', async (req, res) => {
     console.log("get works");
     var username = req.params.username;
 
@@ -25,7 +19,7 @@ app.get('/api/getUser/:username', async (req, res) => {
     });
 });
 
-app.post('/api/signUser', async (req, res) => {
+router.post('/api/signUser', async (req, res) => {
     console.log("post works");
     
     console.log(req.body);
@@ -42,7 +36,7 @@ app.post('/api/signUser', async (req, res) => {
     
 });
 
-app.get('/api/updateBalance/:user/:cur/:amt/:buysell', async (req, res) => {
+router.get('/api/updateBalance/:user/:cur/:amt/:buysell', async (req, res) => {
     console.log("update balance works");
     var user = req.params.user;
     var cur = req.params.cur;
@@ -59,7 +53,7 @@ app.get('/api/updateBalance/:user/:cur/:amt/:buysell', async (req, res) => {
     else res.status(300).send({message : "Not enough currency in wallet"});
 });
 
-app.get('/api/updateHistory/:user/:cur1/:cur2/:amt', async (req, res) => {
+router.get('/api/updateHistory/:user/:cur1/:cur2/:amt', async (req, res) => {
     console.log("update balance works");
     var user = req.params.user;
     var cur1 = req.params.cur1;
@@ -85,4 +79,4 @@ app.get('/api/updateHistory/:user/:cur1/:cur2/:amt', async (req, res) => {
     res.status(244).send({message : "sent hist update"});
 });
 
-app.listen(port, () => console.log("listening to port : " + port));
+export default router;
