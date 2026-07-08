@@ -31,8 +31,8 @@ const handleSignup = (e) => {
   console.log("inside sign up");
 
   e.preventDefault();
-  var username = document.getElementById('newuname').value;
-  var password = document.getElementById('newpword').value;
+  var username = document.getElementById('uname').value;
+  var password = document.getElementById('pword').value;
 
   const url = "http://localhost:3001/api/signUser";
 
