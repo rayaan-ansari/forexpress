@@ -39,6 +39,25 @@ router.get('/api/login/:username/:password', async (req, res) => {
     }
 });
 
+router.post('/api/login', async (req, res) => {
+    const {username, password} = req.body;
+
+    var result = await validateUser(username, password);
+
+    if(result == 2){
+        var balance = await getBalance(username);
+        var history = await getHistory(username);
+        res.status(244).send({
+            message : "Login successful",
+            balance : balance,
+            history : history
+        });
+    }
+    else{
+        res.status(300).send({ message : "Incorrect username or password" });
+    }
+});
+
 router.post('/api/signUser', async (req, res) => {
     console.log("post works");
     
