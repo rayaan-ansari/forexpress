@@ -23,7 +23,11 @@ function App() {
   const loc = useLocation();
 
   useEffect(() => {
-    if(loc.pathname == '/login' || loc.pathname == '/signup') setNavVisibility(false);
+    if(loc.pathname == '/login') setNavVisibility(false);
+    else if(loc.pathname == '/signup') {
+      setTopButtons([["", "Home"]]);
+      setNavVisibility(true);
+    }
     else if(loc.pathname == '/overview') {
       setTopButtons([["balance", "Balance"], ["", "Home"]]);
       setNavVisibility(true);
