@@ -44,7 +44,7 @@ async function main(){
       database: "currencies"
     });
 
-    for(var i = 1; i < currencyComparisons.length; i++){
+    for(var i = 0; i < currencyComparisons.length; i++){
         const stopYear = 2024, stopMonth = 5, stopDay = 31, stopHour = 2, stopMinute = 17;
         let startYear = 2019, startMonth = 6, startDay = 16, startHour = 6, startMinute = 55;
         //console.log(startYear + " " + startMonth);
