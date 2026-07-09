@@ -43,20 +43,24 @@ async function main(){
       password: "Calculator21!",
       database: "currencies"
     });
-
-    for(var i = 0; i < currencyComparisons.length; i++){
+    // skip audcad
+    for(var i = 1; i < currencyComparisons.length; i++){
         const stopYear = 2024, stopMonth = 5, stopDay = 31, stopHour = 2, stopMinute = 17;
-        let startYear = 2019, startMonth = 6, startDay = 16, startHour = 6, startMinute = 55;
-        //console.log(startYear + " " + startMonth);
+        let startYear = 2019, startMonth = 7, startDay = 3, startHour = 7, startMinute = 17;
         var cur1 = currencyComparisons[i][0];
         var cur2 = currencyComparisons[i][1];
         var price = 0.5;
         var z = 0
-        while(z != 10000){
+        console.log("Starting generation for " + cur1 + "/" + cur2);
+        while(true){
             z++;
            // console.log(startYear + " " + startMonth + " " + stopYear + " " + stopMonth + " " + price);
 
             const arr = await getNextDate(startYear, startMonth, startDay, startHour, startMinute);
+            if(startYear == stopYear && startMonth == stopMonth && startDay == stopDay &&
+                 startHour == stopHour && startMinute == stopMinute){
+                break;
+            }
             startYear = arr[0];
             startMonth = arr[1];
             startDay = arr[2];
@@ -71,7 +75,7 @@ async function main(){
 
             await insertPrice(startYear, startMonth, startDay, startHour, startMinute, price, cur1, cur2);
         }
-
+        console.log("Finished generation for " + cur1 + "/" + cur2);
     }
 }
 
@@ -84,7 +88,11 @@ function leap(year){
 async function getNextDate(year, month, day, hour, minute){
 
     //console.log(year + " " + month + " " + day + " " + hour + " " + minute);
-
+    // speed up gen by skipping mins
+    minute--;
+    if(minute != 60){
+        hour++;
+    }
     minute++;
     if(minute == 60){
         minute = 0;

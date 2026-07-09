@@ -55,8 +55,8 @@ export async function main(){
 }                            
 
 export async function insertPrice(year, month, day, hour, minute, price, cur1, cur2){
-    console.log('insert into ' + cur1 + cur2 + ' (year,month,day,hour,minute,price) values (\'' + year + '\',' + '\'' + month + '\',' + '\'' + day + '\',' + '\'' + hour + '\',' + '\'' + minute + '\',' + '\'' + price + '\')');
-    await con.execute('insert into ' + cur1 + cur2 + ' (year,month,day,hour,minute,price) values (\'' + year + '\',' + '\'' + month + '\',' + '\'' + day + '\',' + '\'' + hour + '\',' + '\'' + minute + '\',' + '\'' + price + '\')');
+    // console.log('insert into ' + cur1 + cur2 + ' (year,month,day,hour,minute,price) values (\'' + year + '\',' + '\'' + month + '\',' + '\'' + day + '\',' + '\'' + hour + '\',' + '\'' + minute + '\',' + '\'' + price + '\')');
+    await con.query('insert into ' + cur1 + cur2 + ' (year,month,day,hour,minute,price) values (\'' + year + '\',' + '\'' + month + '\',' + '\'' + day + '\',' + '\'' + hour + '\',' + '\'' + minute + '\',' + '\'' + price + '\')');
 }
 
 async function getHistory(cur1, cur2, index){
@@ -105,13 +105,13 @@ export async function getDayData(cur1, cur2){
     return await getData(cur1, cur2, 24, 60);
 }
 export async function getWeekData(cur1, cur2){
-    return await getData(cur1, cur2, 21, 480);
+    return await getData(cur1, cur2, 24 * 7, 480);
 }
 export async function getMonthData(cur1, cur2){
-    return await getData(cur1, cur2, 30, 1440);
+    return await getData(cur1, cur2, 30 * 24, 1440);
 }
 export async function getYearData(cur1, cur2){
-    return await getData(cur1, cur2, 24, 21600);
+    return await getData(cur1, cur2, 24 * 365, 21600);
 }
 export async function getFiveYearsData(cur1, cur2){
     return await getData(cur1, cur2, 60, 43200);
