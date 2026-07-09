@@ -17,7 +17,7 @@ export default function Card({cur1, cur2}) {
 
     var url = `https://limpness-blemish-oblong.ngrok-free.dev/api/getData/Top/${cur1}/${cur2}`;
     console.log(url);
-    var response = await fetch(url);
+    var response = await fetch(url, { headers: { 'ngrok-skip-browser-warning': 'true' } });
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
@@ -35,7 +35,7 @@ export default function Card({cur1, cur2}) {
 
     url = 'https://limpness-blemish-oblong.ngrok-free.dev/api/updateBalance/rayaan/' + cur2 + '/' + amt + '/sell';
     console.log(url);
-    response = await fetch(url);
+    response = await fetch(url, { headers: { 'ngrok-skip-browser-warning': 'true' } });
 
     const stat = response.json();
     if(stat.message == "success") console.log("success");

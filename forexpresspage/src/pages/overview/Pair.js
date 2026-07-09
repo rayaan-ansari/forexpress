@@ -8,7 +8,7 @@ function Pair({cur1, cur2}){
             const url = "https://limpness-blemish-oblong.ngrok-free.dev/api/getData/Top/" + cur1 + "/" + cur2;
             //console.log(url);
 
-            var data = await fetch(url);
+            var data = await fetch(url, { headers: { 'ngrok-skip-browser-warning': 'true' } });
             //console.log("data : " + data);
             if (!data.ok) {
                 throw new Error('Network response was not ok');

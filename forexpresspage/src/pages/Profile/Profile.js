@@ -10,7 +10,7 @@ export default function Profile({ username }) {
     const fetchUserHistory = async () => {
       const url = `https://limpness-blemish-oblong.ngrok-free.dev/api/getUser/${username}`;
       console.log(url);
-      const response = await fetch(url);
+      const response = await fetch(url, { headers: { 'ngrok-skip-browser-warning': 'true' } });
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }

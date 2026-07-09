@@ -14,7 +14,7 @@ export default function ChartMaker({time, cur1, cur2}){
     const fetchHistory = async () => {
         const url = `https://limpness-blemish-oblong.ngrok-free.dev/api/getData/${time}/${cur1}/${cur2}`;
         console.log(url);
-        const response = await fetch(url);
+        const response = await fetch(url, { headers: { 'ngrok-skip-browser-warning': 'true' } });
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
