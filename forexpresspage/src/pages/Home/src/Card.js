@@ -6,6 +6,7 @@ import ChartMaker from './ChartMaker.js';
 export default function Card({cur1, cur2, username}) {
 
   const [time, setTime] = useState("NowData");
+  const [tradeStatus, setTradeStatus] = useState('');
 
   const handleBuy = async e => {
 
@@ -15,13 +16,9 @@ export default function Card({cur1, cur2, username}) {
     var amt = document.getElementById('newAmount').value;
     console.log(cur1 + " / " + cur2 + " / " + amt);
 
-    var url = `https://limpness-blemish-oblong.ngrok-free.dev/api/updateBalance/${username}/${cur1}/${amt}/buy`;
+    var url = `https://limpness-blemish-oblong.ngrok-free.dev/api/getData/Top/${cur1}/${cur2}`;
     console.log(url);
     var response = await fetch(url, { headers: { 'ngrok-skip-browser-warning': 'true' } });
-
-    url = `https://limpness-blemish-oblong.ngrok-free.dev/api/getData/Top/${cur1}/${cur2}`;
-    console.log(url);
-    response = await fetch(url, { headers: { 'ngrok-skip-browser-warning': 'true' } });
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
@@ -33,17 +30,35 @@ export default function Card({cur1, cur2, username}) {
 
     console.log(hist);
 
-    amt = Math.floor(amt * hist.price * 100) / 100;
+    const cost = Math.floor(amt * hist.price * 100) / 100;
 
-    console.log(hist.price + " " + amt);
+    console.log(hist.price + " " + cost);
 
-    url = `https://limpness-blemish-oblong.ngrok-free.dev/api/updateBalance/${username}/${cur2}/${amt}/sell`;
+    // Charge cur2 first; only grant cur1 if payment actually succeeds.
+    url = `https://limpness-blemish-oblong.ngrok-free.dev/api/updateBalance/${username}/${cur2}/${cost}/sell`;
     console.log(url);
     response = await fetch(url, { headers: { 'ngrok-skip-browser-warning': 'true' } });
+    const sellStat = await response.json();
 
-    const stat = await response.json();
-    if(stat.message == "sent balance update") console.log("success");
-    else console.log("Not enough money in wallet");
+    if(sellStat.message != "sent balance update"){
+      console.log("Not enough money in wallet");
+      setTradeStatus("Not enough " + cur2 + " to complete this trade.");
+      return;
+    }
+
+    url = `https://limpness-blemish-oblong.ngrok-free.dev/api/updateBalance/${username}/${cur1}/${amt}/buy`;
+    console.log(url);
+    response = await fetch(url, { headers: { 'ngrok-skip-browser-warning': 'true' } });
+    const buyStat = await response.json();
+
+    if(buyStat.message == "sent balance update"){
+      console.log("success");
+      setTradeStatus("Bought " + amt + " " + cur1 + " for " + cost + " " + cur2 + ".");
+    }
+    else{
+      console.log("buy leg failed after payment succeeded");
+      setTradeStatus("Trade failed unexpectedly after payment. Contact support.");
+    }
   }
 
   async function fetchData(url) {
@@ -85,6 +100,7 @@ export default function Card({cur1, cur2, username}) {
         <input type="text" placeholder="Enter Amount" id="newAmount" name="newAmount"></input> <br />
 
         <button onClick={(e) => handleBuy(e)} className="confirm-button">Confirm</button>
+        <p className="trade-status">{tradeStatus}</p>
       </div>
       <div className="curs">
         <p>{cur1} / {cur2}</p>
