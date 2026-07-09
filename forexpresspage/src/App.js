@@ -25,7 +25,7 @@ function App() {
   useEffect(() => {
     if(loc.pathname == '/login' || loc.pathname == '/signup') setNavVisibility(false);
     else if(loc.pathname == '/overview') {
-      setTopButtons([["balance", "Balance"]]);
+      setTopButtons([["balance", "Balance"], ["", "Home"]]);
       setNavVisibility(true);
     }
     else if(loc.pathname == '/'){
@@ -33,7 +33,7 @@ function App() {
       setNavVisibility(true);
     }
     else if(loc.pathname == '/balance'){
-      setTopButtons([["overview", "Overview"]]);
+      setTopButtons([["overview", "Overview"], ["", "Home"]]);
       setNavVisibility(true);
     }
     else if(loc.pathname.substring(1, 5) == 'card'){
