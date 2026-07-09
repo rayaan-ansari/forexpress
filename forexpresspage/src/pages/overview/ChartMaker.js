@@ -84,9 +84,11 @@ export default function ChartMaker({time, cur1, cur2}){
             labels: label,
             datasets: [
                 {
+                    label: `${cur1}/${cur2}`,
                     backgroundColor: 'rgba(30, 30, 30 0.8)',
                     borderColor: lineColor,
                     borderWidth: 2,
+                    tension: 0,
                     data: data,
                     pointRadius: 0,
                     pointHoverRadius: 0
@@ -98,9 +100,11 @@ export default function ChartMaker({time, cur1, cur2}){
     const [chartData, setChartData] = useState({
         datasets: [
           {
+            label: `${cur1}/${cur2}`,
             backgroundColor: 'rgba(30, 30, 30 0.8)',
             borderColor: 'rgba(0,255,0,1)',
             borderWidth: 1,
+            tension: 0,
             hoverBackgroundColor: 'rgba(255,0,0,0.4)',
             hoverBorderColor: 'rgba(255,99,132,1)',
             data: data,

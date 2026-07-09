@@ -55,7 +55,7 @@ function App() {
         <Route path="/overview/*" element={<Overview currencyComparisons={currencyComparisons} />} />
         <Route path="/balance" element={<Profile username={username} />} />
         {currencyComparisons.map((entry) => (
-          <Route path={`/card${entry[0]}${entry[1]}`} element={<Card cur1={entry[0]} cur2={entry[1]} />} />
+          <Route path={`/card${entry[0]}${entry[1]}`} element={<Card cur1={entry[0]} cur2={entry[1]} username={username} />} />
         ))}
       </Routes>
     </div>

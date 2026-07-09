@@ -58,7 +58,7 @@ async function signUp(username, pass){
   var emptyBalance = [];
 
   for(var i = 0; i < currencies.length; i++){
-    emptyBalance.push([currencies.at(i), 0]);
+    emptyBalance.push([currencies.at(i), currencies.at(i) == "AUD" ? 300 : 0]);
   }
 
   emptyBalance = JSON.stringify(emptyBalance);
@@ -102,6 +102,9 @@ async function getBalance(username){
 
 async function updateBalance(username, cur, amt){
     var balance = await getBalance(username);
+    if(balance == undefined){
+      return "user not found";
+    }
     //balance = "\'" + balance + "\'";
     balance = JSON.parse(balance);
     cur = cur.toUpperCase();

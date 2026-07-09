@@ -3,7 +3,7 @@ import { useState } from 'react';
 import ChartMaker from './ChartMaker.js';
 
 
-export default function Card({cur1, cur2}) {
+export default function Card({cur1, cur2, username}) {
 
   const [time, setTime] = useState("NowData");
 
@@ -15,9 +15,13 @@ export default function Card({cur1, cur2}) {
     var amt = document.getElementById('newAmount').value;
     console.log(cur1 + " / " + cur2 + " / " + amt);
 
-    var url = `https://limpness-blemish-oblong.ngrok-free.dev/api/getData/Top/${cur1}/${cur2}`;
+    var url = `https://limpness-blemish-oblong.ngrok-free.dev/api/updateBalance/${username}/${cur1}/${amt}/buy`;
     console.log(url);
     var response = await fetch(url, { headers: { 'ngrok-skip-browser-warning': 'true' } });
+
+    url = `https://limpness-blemish-oblong.ngrok-free.dev/api/getData/Top/${cur1}/${cur2}`;
+    console.log(url);
+    response = await fetch(url, { headers: { 'ngrok-skip-browser-warning': 'true' } });
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
@@ -33,12 +37,12 @@ export default function Card({cur1, cur2}) {
 
     console.log(hist.price + " " + amt);
 
-    url = 'https://limpness-blemish-oblong.ngrok-free.dev/api/updateBalance/rayaan/' + cur2 + '/' + amt + '/sell';
+    url = `https://limpness-blemish-oblong.ngrok-free.dev/api/updateBalance/${username}/${cur2}/${amt}/sell`;
     console.log(url);
     response = await fetch(url, { headers: { 'ngrok-skip-browser-warning': 'true' } });
 
-    const stat = response.json();
-    if(stat.message == "success") console.log("success");
+    const stat = await response.json();
+    if(stat.message == "sent balance update") console.log("success");
     else console.log("Not enough money in wallet");
   }
 

@@ -89,6 +89,7 @@ router.get('/api/updateBalance/:user/:cur/:amt/:buysell', async (req, res) => {
     var result = await updateBalance(user, cur, amt);
 
     if(result == "success") res.status(244).send({message : "sent balance update"})
+    else if(result == "user not found") res.status(300).send({message : "User not found"});
     else res.status(300).send({message : "Not enough currency in wallet"});
 });
 

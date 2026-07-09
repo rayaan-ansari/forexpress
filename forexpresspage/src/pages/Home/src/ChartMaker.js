@@ -69,9 +69,11 @@ export default function ChartMaker({time, cur1, cur2}){
             labels: label,
             datasets: [
                 {
+                    label: `${cur1}/${cur2}`,
                     backgroundColor: 'rgba(30, 30, 30 0.8)',
                     borderColor: lineColor,
                     borderWidth: 2,
+                    tension: 0,
                     data: data,
                     pointRadius: 0,
                     pointHoverRadius: 0
@@ -84,9 +86,11 @@ export default function ChartMaker({time, cur1, cur2}){
             labels: label,
             datasets: [
                 {
+                    label: `${cur1}/${cur2}`,
                     backgroundColor: 'rgba(30, 30, 30 0.8)',
                     borderColor: lineColor,
                     borderWidth: 2,
+                    tension: 0,
                     data: data,
                     pointRadius: 0,
                     pointHoverRadius: 0
