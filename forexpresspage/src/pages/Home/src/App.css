@@ -16,9 +16,6 @@ label, input{
 .buy{
     margin-left: 4vw;
 }
-.chart-ops{
-    margin-top: -6vh;
-}
 .confirm-button{
     height: 5vh;
     width: 10vh;
@@ -26,6 +23,9 @@ label, input{
     background-color: rgb(50, 50, 50);
     margin-top: 1vh;
     border-radius: 10px;
+}
+.trade-status{
+    margin-top: 2vh;
 }
 .App{
     margin-top: 3vh;
@@ -39,31 +39,33 @@ input{
     background-color: rgb(50, 50, 50);
 }
 #testGraph{
-    margin-top : 3vh;
     width : 70vw;
     height : 55vh;
 }
+.curs{
+    text-align: center;
+    font-size: 4em;
+    margin: 4vh 0;
+}
+.chart-ops{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .buttons{
-    margin-left: 52vw;
-    transform: translateY(-20vh);
-    z-index: -1;
+    display: flex;
+    gap: 1vw;
+    margin-bottom: 2vh;
 }
 .buttons button{
     font-size: 1.2em;
     height: 5vh;
     width: 10vh;
-    margin-left: 1vw;
     background-color: rgb(50, 50, 50);
-    margin-top: 10vh;
     border-radius: 10px;
 }
 .chart-maker{
-    margin-top: -20vh;
-}
-.curs{
-    position: absolute;
-    margin-left: 40vw;
-    margin-top: -40vh;
-    font-size: 8em;
-    z-index: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }

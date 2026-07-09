@@ -1,18 +1,12 @@
 #chartContainer{
-    margin-top: 20vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 3vh;
 }
 .lo, .hi{
     font-size: 2em;
-    margin-left: 2vw;
-}
-.lo{
-    margin-top: 10vh;
-}
-.hi{
-    margin-top: 5vh;
 }
 .chart{
-    margin-left: 30vw;
-    margin-top: -52vh;
+    margin-top: 2vh;
 }

@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react';
 
 export default function Profile({ username }) {
 
-  const [history, setHistory] = useState([2024, 5, 4, 3, 2, "DKK", "USD", 1000], (arg) => history=arg);
-  const [userBalance, setUserBalance] = useState([2024, 5, 4, 3, 2, "DKK", "USD", 999], (arg) => userBalance=arg);
+  const [history, setHistory] = useState([]);
+  const [userBalance, setUserBalance] = useState([]);
 
   useEffect(() => {
     const fetchUserHistory = async () => {

@@ -54,6 +54,10 @@ export default function Card({cur1, cur2, username}) {
     if(buyStat.message == "sent balance update"){
       console.log("success");
       setTradeStatus("Bought " + amt + " " + cur1 + " for " + cost + " " + cur2 + ".");
+
+      url = `https://limpness-blemish-oblong.ngrok-free.dev/api/updateHistory/${username}/${cur1}/${cur2}/${amt}`;
+      console.log(url);
+      await fetch(url, { headers: { 'ngrok-skip-browser-warning': 'true' } });
     }
     else{
       console.log("buy leg failed after payment succeeded");
