@@ -12,11 +12,11 @@ export default function ForexpressHome() {
                 </article>
                 <article>
                     <h1 className="sub-title">It costs nothing</h1>
-                    <p className="sub-text">Our product is a demo. That means using it is completely free. You trade with fake money and earn knowledge in the process.</p>  
+                    <p className="sub-text">Our product is a demo. That means using it is completely free until it isn't. You trade with fake money.</p>  
                 </article>
                 <article>
                     <h1 className="sub-title">We don't sell your data</h1>
-                    <p className="sub-text">When you use any of our products, you are given our absolute garuantee that we will not sell any of your data to the government.</p>
+                    <p className="sub-text">When you use any of our products, you are given our absolute guarantee that we only sell half of your data to the government.</p>
                 </article>
             </div>
         </div>

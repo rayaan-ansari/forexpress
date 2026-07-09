@@ -8,7 +8,7 @@ export default function Profile({ username }) {
 
   useEffect(() => {
     const fetchUserHistory = async () => {
-      const url = `http://localhost:3001/api/getUser/${username}`;
+      const url = `https://limpness-blemish-oblong.ngrok-free.dev/api/getUser/${username}`;
       console.log(url);
       const response = await fetch(url);
       if (!response.ok) {

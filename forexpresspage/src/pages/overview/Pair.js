@@ -5,7 +5,7 @@ function Pair({cur1, cur2}){
     const [currentPrice, setCurrentPrice] = useState(0);
     useEffect(() => {
         async function runEffect(){
-            const url = "http://localhost:3001/api/getData/Top/" + cur1 + "/" + cur2;
+            const url = "https://limpness-blemish-oblong.ngrok-free.dev/api/getData/Top/" + cur1 + "/" + cur2;
             //console.log(url);
 
             var data = await fetch(url);
