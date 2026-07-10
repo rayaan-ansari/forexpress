@@ -6,37 +6,30 @@ function Pair({cur1, cur2}){
     useEffect(() => {
         async function runEffect(){
             const url = "https://limpness-blemish-oblong.ngrok-free.dev/api/getData/Top/" + cur1 + "/" + cur2;
-            //console.log(url);
 
             var data = await fetch(url, { headers: { 'ngrok-skip-browser-warning': 'true' } });
-            //console.log("data : " + data);
             if (!data.ok) {
                 throw new Error('Network response was not ok');
             }
             data = await data.json();
-           // console.log("topData : " + data);
             data = await data.data;
-            //console.log(data);
             data = JSON.parse(data);
-            //console.log(data);
             data = data[0];
-            //console.log(data);
-            //console.log(data.price);
             setCurrentPrice(data.price);
         }
         runEffect();
-        //console.log("overall final : " + currentPrice);
     }, [cur1, cur2]);
     return(
-        <div>
-          <div className="pair">
-            <div className="meta">
-                <p>{cur1} / {cur2}</p>
-                <p>{currentPrice}</p>
+        <div className="mkt-card">
+            <div className="mkt-top">
+                <span className="mkt-pair">{cur1}<span className="mkt-slash">/</span>{cur2}</span>
+                <span className="mkt-price">{currentPrice}</span>
             </div>
-                <ChartMaker time={"NowData"} cur1={cur1} cur2={cur2} className="chart" />
-            <div className="line"></div>
-          </div>
+            <ChartMaker time={"NowData"} cur1={cur1} cur2={cur2} />
+            <div className="mkt-foot">
+                <span className="mkt-tag">FX pair</span>
+                <span className="mkt-view">View pair →</span>
+            </div>
         </div>
     );
 }

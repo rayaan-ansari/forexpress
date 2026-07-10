@@ -99,7 +99,7 @@ export default function ChartMaker({time, cur1, cur2}){
         });
     
       const [chartOptions, setChartOptions] = useState({
-        responsive: false,
+        responsive: true,
         maintainAspectRatio: false,
         scales: {
             x:{
@@ -114,14 +114,23 @@ export default function ChartMaker({time, cur1, cur2}){
       });
     
     return (
-        <div id="chartContainer">
-            <div id="chartMeta">
-                <p className="hi">High : {high}</p>
-                <p className="lo">Low : {low}</p>
-                <p>Current: {data[data.length - 1]}</p>
+        <div className="chartblock">
+            <div className="chart-meta">
+                <div className="meta-item">
+                    <span className="meta-label">Current</span>
+                    <span className="meta-value">{data[data.length - 1]}</span>
+                </div>
+                <div className="meta-item">
+                    <span className="meta-label">High</span>
+                    <span className="meta-value up">{high}</span>
+                </div>
+                <div className="meta-item">
+                    <span className="meta-label">Low</span>
+                    <span className="meta-value down">{low}</span>
+                </div>
             </div>
             <div className="chart">
-                <NewChart data={chartData} options={chartOptions} width={50} height={30} />
+                <NewChart data={chartData} options={chartOptions} />
             </div>
         </div>
     );

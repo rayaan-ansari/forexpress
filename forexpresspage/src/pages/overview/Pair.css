@@ -1,17 +1,86 @@
-p{
-    font-family: sans-serif;
-    color: white;
+.mkt-card {
+  background: linear-gradient(180deg, var(--surface) 0%, var(--bg-2) 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px 20px 16px;
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
 }
-.pair{
-    background-color: rgb(30, 30, 30);
+.mkt-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(45, 212, 167, 0.4);
+  box-shadow: var(--shadow);
 }
-.meta{
-    font-size: 2.7em;
-    margin-left: 5vw;
+
+.mkt-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
 }
-.line{
-    height: 0.3vh;
-    background-color: rgb(70, 70, 70);
-    border-radius: 1px;
-    width: 80wv;
+.mkt-pair {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.mkt-slash {
+  color: var(--text-faint);
+  margin: 0 2px;
+}
+.mkt-price {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--brand);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ChartMaker layout inside a market card */
+.ov-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ov-chart-canvas {
+  height: 110px;
+  width: 100%;
+}
+.ov-chart-hilo {
+  display: flex;
+  gap: 14px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.ov-hilo.up {
+  color: var(--up);
+}
+.ov-hilo.down {
+  color: var(--down);
+}
+
+.mkt-foot {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.mkt-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.mkt-view {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  transition: color 0.18s ease;
+}
+.mkt-card:hover .mkt-view {
+  color: var(--brand);
 }

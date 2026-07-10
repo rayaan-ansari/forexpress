@@ -1,7 +1,7 @@
 import './App.css';
 import stockImg from './images/lgsuStock.jpg'
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 function App({setUsername}) {
@@ -43,52 +43,68 @@ function App({setUsername}) {
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-  } 
+  }
 
   useEffect(() => {
     if(validationStatus == "User validated"){
       navigate("/overview")
     }
   }, [validationStatus]);
-  
+
   const handleLogin = (e) => {
     console.log("inside log in");
-  
+
     e.preventDefault();
     var username = document.getElementById('uname').value;
     var password = document.getElementById('pword').value;
-  
+
     console.log(username);
     console.log(password);
     const url = 'https://limpness-blemish-oblong.ngrok-free.dev/api/login';
-  
+
     console.log(url);
-    
+
     fetchData(url, username, password);
   }
 
   return (
-    <div className="login-total">
-      <div className="login-half">
-        <div className="login-cont">
+    <div className="auth">
+      <div className="auth-panel">
+        <Link to="/" className="auth-brand">
+          <span className="auth-brand-mark" aria-hidden="true" />
+          <span>forexpress</span>
+        </Link>
+
+        <div className="auth-card">
           <form onSubmit={(e) => handleLogin(e)}>
+            <h1 className="auth-title">Welcome back</h1>
+            <p className="auth-subtitle">Log in to access your markets and portfolio.</p>
 
-            <p className="login-text">Log in</p> <br />
+            {error && <p className="auth-error">{error}</p>}
 
-            <p className="error-text">{error}</p>
+            <label htmlFor="uname" className="auth-label">Username</label>
+            <input type="text" placeholder="Enter your username" id="uname" name="username" className="auth-input" maxLength="16" />
 
-            <label htmlFor="uname" className="uname">Enter Username (max 16 characters)</label> <br />
-            <input type="text" placeholder="Enter username here..." id="uname" name="username" className="uname-text" maxlength="16"></input> <br />
+            <label htmlFor="pword" className="auth-label">Password</label>
+            <input type="password" placeholder="Enter your password" id="pword" name="password" className="auth-input" maxLength="16" />
 
-            <label htmlFor="pword" className="pword">Enter Password (max 16 characters)</label> <br />
-            <input type="password" placeholder="Enter password here..." id="pword" name="password" className="pword-text" maxlength="16"></input> <br />
+            <button type="submit" className="auth-button">Log in</button>
 
-            <button type="submit" className="login-button">Log in</button>
-
+            <p className="auth-switch">
+              New to forexpress? <Link to="/signup">Create an account</Link>
+            </p>
+            <Link to="/" className="auth-home">← Back to home</Link>
           </form>
         </div>
       </div>
-      <img src={stockImg} className="stock" alt="could not find image" />
+
+      <div className="auth-visual">
+        <img src={stockImg} className="auth-visual-img" alt="Trading floor" />
+        <div className="auth-visual-overlay">
+          <p className="auth-visual-quote">“The markets never sleep — and neither does your demo portfolio.”</p>
+          <p className="auth-visual-meta">Live FX data · risk-free trading</p>
+        </div>
+      </div>
     </div>
   );
 }

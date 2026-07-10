@@ -1,12 +1,48 @@
-#chartContainer{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 3vh;
+.chartblock {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
 }
-.lo, .hi{
-    font-size: 2em;
+
+.chart-meta {
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
 }
-.chart{
-    margin-top: 2vh;
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.meta-label {
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.meta-value {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.meta-value.up {
+  color: var(--up);
+}
+.meta-value.down {
+  color: var(--down);
+}
+
+.chart {
+  width: 100%;
+  height: 380px;
+}
+
+@media (max-width: 860px) {
+  .chart {
+    height: 300px;
+  }
 }

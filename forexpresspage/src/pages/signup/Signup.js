@@ -1,15 +1,17 @@
 import './App.css';
 import stockImg from './images/lgsuStock.jpg'
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function App() {
 
   const [stat, setStat] = useState('');
+  const isOk = stat === "Confirmed! Return to home and Log in.";
 
   async function sendData(url, user, pass){
 
     console.log("sending data...");
-  
+
     try {
       // Send the GET request using fetch
       const response = await fetch(url, {
@@ -38,41 +40,57 @@ function App() {
       console.error('Error fetching data:', error);
     }
   }
-  
+
   const handleSignup = (e) => {
     console.log("inside sign up");
-  
+
     e.preventDefault();
     var username = document.getElementById('uname').value;
     var password = document.getElementById('pword').value;
-  
+
     const url = "https://limpness-blemish-oblong.ngrok-free.dev/api/signUser";
-  
+
     sendData(url, username, password);
   }
 
   return (
-    <div className="App">
-      <div className="login-half">
-        <div className="login-cont">
+    <div className="auth">
+      <div className="auth-panel">
+        <Link to="/" className="auth-brand">
+          <span className="auth-brand-mark" aria-hidden="true" />
+          <span>forexpress</span>
+        </Link>
+
+        <div className="auth-card">
           <form onSubmit={(e) => handleSignup(e)}>
+            <h1 className="auth-title">Create your account</h1>
+            <p className="auth-subtitle">Start trading with a risk-free demo portfolio in seconds.</p>
 
-            <p className="login-text">Sign up</p> <br />
+            {stat && <p className={isOk ? "auth-ok" : "auth-error"}>{stat}</p>}
 
-            <p style={stat == "Confirmed! Return to home and Log in." ? {color: 'green'} : {color: 'red'}}>{stat}</p>
+            <label htmlFor="uname" className="auth-label">Username <span className="auth-hint">(max 16 characters)</span></label>
+            <input type="text" placeholder="Choose a username" id="uname" name="username" className="auth-input" maxLength="16" />
 
-            <label htmlFor="uname" className="uname">Enter Username (max 16 characters)</label> <br />
-            <input type="text" placeholder="Enter username here..." id="uname" name="username" className="uname-text"></input> <br />
+            <label htmlFor="pword" className="auth-label">Password <span className="auth-hint">(max 16 characters)</span></label>
+            <input type="password" placeholder="Choose a password" id="pword" name="password" className="auth-input" maxLength="16" />
 
-            <label htmlFor="pword" className="pword">Enter Password (max 16 characters)</label> <br />
-            <input type="text" placeholder="Enter password here..." id="pword" name="password" className="pword-text"></input> <br />
+            <button type="submit" className="auth-button">Sign up</button>
 
-            <button type="submit" className="login-button">Sign up</button>
-
+            <p className="auth-switch">
+              Already have an account? <Link to="/login">Log in</Link>
+            </p>
+            <Link to="/" className="auth-home">← Back to home</Link>
           </form>
         </div>
       </div>
-      <img src={stockImg} className="stock-img" alt="could not find image" />
+
+      <div className="auth-visual">
+        <img src={stockImg} className="auth-visual-img" alt="Trading floor" />
+        <div className="auth-visual-overlay">
+          <p className="auth-visual-quote">“Join thousands of traders learning the markets — without risking a cent.”</p>
+          <p className="auth-visual-meta">Free forever · fake money · real charts</p>
+        </div>
+      </div>
     </div>
   );
 }

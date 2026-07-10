@@ -2,11 +2,19 @@ import './App.css';
 import { useState } from 'react';
 import ChartMaker from './ChartMaker.js';
 
+const TIMEFRAMES = [
+  ["NowData", "Now"],
+  ["DayData", "Day"],
+  ["WeekData", "Week"],
+  ["MonthData", "Month"],
+  ["YearData", "Year"],
+];
 
 export default function Card({cur1, cur2, username}) {
 
   const [time, setTime] = useState("NowData");
   const [tradeStatus, setTradeStatus] = useState('');
+  const [statusOk, setStatusOk] = useState(false);
 
   const handleBuy = async e => {
 
@@ -42,6 +50,7 @@ export default function Card({cur1, cur2, username}) {
 
     if(sellStat.message != "sent balance update"){
       console.log("Not enough money in wallet");
+      setStatusOk(false);
       setTradeStatus("Not enough " + cur2 + " to complete this trade.");
       return;
     }
@@ -53,6 +62,7 @@ export default function Card({cur1, cur2, username}) {
 
     if(buyStat.message == "sent balance update"){
       console.log("success");
+      setStatusOk(true);
       setTradeStatus("Bought " + amt + " " + cur1 + " for " + cost + " " + cur2 + ".");
 
       url = `https://limpness-blemish-oblong.ngrok-free.dev/api/updateHistory/${username}/${cur1}/${cur2}/${amt}`;
@@ -61,27 +71,10 @@ export default function Card({cur1, cur2, username}) {
     }
     else{
       console.log("buy leg failed after payment succeeded");
+      setStatusOk(false);
       setTradeStatus("Trade failed unexpectedly after payment. Contact support.");
     }
   }
-
-  async function fetchData(url) {
-    try {
-      // Send the GET request using fetch
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data = await response.json();
-      console.log('Data received:', data);
-
-      // Display the received data on the page (for demonstration purposes)
-      document.getElementById('result').textContent = JSON.stringify(data, null, 2);
-      return data;
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  } 
 
   const handlePriceChange = (e, time) => {
     console.log("Requested time change : " + time);
@@ -89,39 +82,50 @@ export default function Card({cur1, cur2, username}) {
   }
 
   return (
-    <div className="App">
-      <div className="buy">
-        <p className="title-text">Buy currency</p>
-        <label htmlFor="currency1">Base currency    </label>
-        <input type="text" placeholder="Enter Base" id="curOne" name="curOne"></input> <br />
-
-
-        <label htmlFor="currency2">Quote Currency   </label>
-        <input type="text" placeholder="Enter Quote" id="curTwo" name="curTwo"></input> <br />
-
-
-        <label htmlFor="amount">Amount    </label>
-        <input type="text" placeholder="Enter Amount" id="newAmount" name="newAmount"></input> <br />
-
-        <button onClick={(e) => handleBuy(e)} className="confirm-button">Confirm</button>
-        <p className="trade-status">{tradeStatus}</p>
-      </div>
-      <div className="curs">
-        <p>{cur1} / {cur2}</p>
-      </div>
-      <div className="chart-ops">
-        <div className="buttons">
-          <button onClick={(e) => handlePriceChange(e, "NowData")}>Now</button>
-          <button onClick={(e) => handlePriceChange(e, "DayData")}>Day</button>
-          <button onClick={(e) => handlePriceChange(e, "WeekData")}>Week</button>
-          <button onClick={(e) => handlePriceChange(e, "MonthData")}>Month</button>
-          <button onClick={(e) => handlePriceChange(e, "YearData")}>Year</button>
+    <div className="card">
+      <header className="card-head">
+        <div className="card-pairwrap">
+          <span className="card-pair">{cur1}<span className="card-slash">/</span>{cur2}</span>
+          <span className="card-pair-label">Foreign exchange pair</span>
         </div>
-        <div className="chart-maker">
+      </header>
+
+      <div className="card-grid">
+        <section className="card-chartpanel">
+          <div className="card-timeframes">
+            {TIMEFRAMES.map(([value, label]) => (
+              <button
+                key={value}
+                onClick={(e) => handlePriceChange(e, value)}
+                className={time === value ? "tf-btn tf-btn-active" : "tf-btn"}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
           <ChartMaker time={time} cur1={cur1} cur2={cur2} />
-        </div>
+        </section>
+
+        <aside className="card-orderpanel">
+          <p className="order-title">Buy currency</p>
+          <p className="order-sub">Trade {cur1} against {cur2} at the live rate.</p>
+
+          <label htmlFor="curOne" className="order-label">Base currency</label>
+          <input type="text" placeholder="Enter Base" id="curOne" name="curOne" defaultValue={cur1} className="order-input" />
+
+          <label htmlFor="curTwo" className="order-label">Quote currency</label>
+          <input type="text" placeholder="Enter Quote" id="curTwo" name="curTwo" defaultValue={cur2} className="order-input" />
+
+          <label htmlFor="newAmount" className="order-label">Amount</label>
+          <input type="text" placeholder="Enter Amount" id="newAmount" name="newAmount" className="order-input" />
+
+          <button onClick={(e) => handleBuy(e)} className="order-button">Confirm purchase</button>
+
+          {tradeStatus && (
+            <p className={statusOk ? "order-status ok" : "order-status err"}>{tradeStatus}</p>
+          )}
+        </aside>
       </div>
     </div>
   );
 }
-

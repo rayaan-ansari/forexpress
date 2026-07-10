@@ -115,7 +115,7 @@ export default function ChartMaker({time, cur1, cur2}){
       });
     
       const [chartOptions, setChartOptions] = useState({
-        responsive: false,
+        responsive: true,
         maintainAspectRatio: false,
         scales: {
             y:{
@@ -133,11 +133,13 @@ export default function ChartMaker({time, cur1, cur2}){
       });
     
     return (
-        <div id="chartContainer">
-            <NewChart data={chartData} options={chartOptions} className="chart" width={50} height={25} />
-            <div id="chartMeta">
-                <p>High : {high}</p>
-                <p>Low : {low}</p>
+        <div className="ov-chart">
+            <div className="ov-chart-canvas">
+                <NewChart data={chartData} options={chartOptions} />
+            </div>
+            <div className="ov-chart-hilo">
+                <span className="ov-hilo up">H {high}</span>
+                <span className="ov-hilo down">L {low}</span>
             </div>
         </div>
     );

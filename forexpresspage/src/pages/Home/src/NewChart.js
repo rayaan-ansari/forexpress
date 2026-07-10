@@ -27,8 +27,8 @@ const NewChart = ({data, options, width, height}) => {
         };
     }, [data, options]);
     return (
-        <div>
-            <canvas ref={chartRef} style={{width: `${width}vw`, height: `${height}vh`}} />
+        <div className="cv-frame">
+            <canvas ref={chartRef} />
         </div>
     );
 }

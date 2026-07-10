@@ -1,5 +1,6 @@
 import './App.css';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Profile({ username }) {
 
@@ -19,36 +20,44 @@ export default function Profile({ username }) {
       var bal = await data.balance;
       hist = await JSON.parse(hist);
       bal = await JSON.parse(bal);
-      console.log("FINAL DATA : " + hist + "  ::  " + bal + "  ::  " + bal.length);
-      if(Array.isArray(hist)){
-        console.log("YAY!");
-      }
-      else{
-        console.log("NO :(");
-      }
-      if(Array.isArray(bal)){
-        console.log("HAPPY!");
-      }
-      else{
-        console.log("SAD :(");
-      }
       await setUserBalance(bal);
       await setHistory(hist);
-      console.log("test:" + history + " " + userBalance);
     };
 
     fetchUserHistory();
   }, [username]);
 
   return (
-    <div>
-      <Balance userBalance={userBalance}/>
-      {history.map((entry) => (
-        <HistoricalEntry history={entry}/>
-      ))}
+    <div className="bal">
+      <header className="bal-head">
+        <div>
+          <p className="bal-eyebrow">Portfolio</p>
+          <h1 className="bal-title">
+            {username ? `${username}'s balance` : "Your balance"}
+          </h1>
+        </div>
+        <Link to="/overview">
+          <button className="bal-cta">Trade markets →</button>
+        </Link>
+      </header>
+
+      <Balance userBalance={userBalance} />
+
+      <section className="bal-section">
+        <h2 className="bal-section-title">Trade history</h2>
+        {history.length === 0 ? (
+          <div className="bal-empty">No trades yet. Head to the markets to place your first trade.</div>
+        ) : (
+          <div className="bal-history">
+            {history.map((entry, i) => (
+              <HistoricalEntry history={entry} key={i} />
+            ))}
+          </div>
+        )}
+      </section>
     </div>
   );
-  
+
   function HistoricalEntry({ history }) {
     const year = history[0];
     const month = history[1];
@@ -59,22 +68,37 @@ export default function Profile({ username }) {
     const cur2 = history[6];
     const amt = history[7];
 
+    const pad = (n) => String(n).padStart(2, '0');
+
     return (
       <div className="trade">
-        <p className="tradeType">{cur1}/{cur2}</p>
-        <p className="tradeDate">{year}-{month}-{day}  {hour}:{minute}</p>
-        <p className="tradeAmt"><span className="left-align">AMT:{amt}</span></p>
+        <div className="trade-left">
+          <span className="trade-badge">BUY</span>
+          <span className="trade-pair">{cur1}<span className="trade-slash">/</span>{cur2}</span>
+        </div>
+        <span className="trade-date">{year}-{pad(month)}-{pad(day)} · {pad(hour)}:{pad(minute)}</span>
+        <span className="trade-amt">{amt} {cur1}</span>
       </div>
     );
   }
 
-  function Balance({userBalance}){
-    return(
-      <div className="balanceContainer">
-        {userBalance.map((entry) => (
-          <p className="balanceEntry">{entry[0]} : {entry[1]}</p>
-        ))}
-      </div>
+  function Balance({ userBalance }) {
+    return (
+      <section className="bal-section">
+        <h2 className="bal-section-title">Holdings</h2>
+        {userBalance.length === 0 ? (
+          <div className="bal-empty">No holdings to display yet.</div>
+        ) : (
+          <div className="bal-grid">
+            {userBalance.map((entry, i) => (
+              <div className="bal-card" key={i}>
+                <span className="bal-card-cur">{entry[0]}</span>
+                <span className="bal-card-amt">{entry[1]}</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
     );
   }
 }
